@@ -14,16 +14,19 @@ def welcome(message):
                           'Чтобы продолжить, введите команду /search\n'
                           'Для показа функционала введите команду /help')
 
+
 def show_jobs(message):
     for vacancy in range(const.number_of_vacancy, const.number_of_messages + const.number_of_vacancy):
         bot.send_message(message.from_user.id, f"{const.file_lines[vacancy]}")
     const.number_of_vacancy += const.number_of_messages
     bot.send_message(message.from_user.id, "Для просмотра других вакансий введите /more")
 
+
 @bot.message_handler(commands=["search"])
 def job_searching(message):
     parse.parse()
     show_jobs(message)
+
 
 @bot.message_handler(commands=["more"])
 def show_more(message):
