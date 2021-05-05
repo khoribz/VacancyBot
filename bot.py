@@ -11,7 +11,8 @@ bot = telebot.TeleBot(const.TOKEN)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-    bot.send_message(message.from_user.id, f'Добро пожаловать, {message.from_user.first_name}!\nЗдесь можно узнать о вакансиях\n'
+    bot.send_message(message.from_user.id, f'Добро пожаловать, {message.from_user.first_name}!\n'
+                                           'Здесь можно узнать о вакансиях\n'
                                            'Для поиска работы введите команду /help')
 
 
@@ -28,13 +29,13 @@ def show_jobs(message):
         vacancy_message = ''
         if const.number_of_messages == 0:
             break
-        vacancy_message += 'Вакансия: ' + vacancy['Вакансия'] + '\n'
-        vacancy_message += 'Зарплата: ' + vacancy['Зарплата'] + '\n'
-        vacancy_message += 'Компания: ' + vacancy['Компания'] + '\n'
-        vacancy_message += 'Место работы: ' + vacancy['Место работы'] + '\n'
-        vacancy_message += 'Ссылка: ' + vacancy['Ссылка']
+        vacancy_message += '*Вакансия:* ' + vacancy['Вакансия'] + '\n'
+        vacancy_message += '*Зарплата:* ' + vacancy['Зарплата'] + '\n'
+        vacancy_message += '*Компания:* ' + vacancy['Компания'] + '\n'
+        vacancy_message += '*Место работы:* ' + vacancy['Место работы'] + '\n'
+        vacancy_message += '*Ссылка:* ' + vacancy['Ссылка']
         const.number_of_messages -= 1
-        bot.send_message(message.from_user.id, vacancy_message)
+        bot.send_message(message.from_user.id, vacancy_message, parse_mode="Markdown")
     const.number_of_vacancy += const.number_of_messages
     bot.send_message(message.from_user.id, "Для просмотра других вакансий введите /more\n"
                                            "Для поиска работы в других сферах введите /search")

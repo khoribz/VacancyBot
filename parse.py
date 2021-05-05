@@ -47,7 +47,8 @@ def get_vacancy(html):
             info = info.get_text()
         else:
             info = "Уточняйте"
-        place = item.find('span', class_='_1h3Zg f-test-text-company-item-location e5P5i _2hCDz _2ZsgW').get_text().replace('\xa0', ' ')
+        place = item.find('span', class_='_1h3Zg f-test-text-company-item-location '
+                                         'e5P5i _2hCDz _2ZsgW').get_text().replace('\xa0', ' ')
         place = place[place.find("Москва"):]
         vacancy.append({
             'name': item.find('div', class_='_1h3Zg _u7Tv _2rfUm _2hCDz _21a7u _2rPTA').get_text(),
