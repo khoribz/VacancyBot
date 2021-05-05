@@ -2,24 +2,24 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
+import const
 
-URL = 'https://hh.ru/vacancies/podrabotka?L_is_autosearch=false&L_profession_id=50.1&area=1&clusters=true&' \
-      'enable_snippets=true&no_magic=true&part_time=only_saturday_and_sunday&page=1'
-HEADERS = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                         'Chrome/89.0.4389.90 Safari/537.36',
-           'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/'
-                     'apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'}
-HOST = 'https://hh.ru'
-FILE = 'vacancy.csv'
+
+HEADERS = {'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 '
+                         '(KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36',
+           'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,'
+                     'image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'}
+HOST = 'https://www.superjob.ru/vakansii'
+SITE = 'https://www.superjob.ru'
 
 
 def save_file(items, path):
-    with open(path, 'w', newline='\n') as file:
-        writer = csv.writer(file, delimiter='\t')
-        writer.writerow(['Вакансия', "Ссылка", "Зарплата", "Город", "Информация"])
+    with open(path, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=' ')
+        writer.writerow(['Вакансия', 'Зарплата', 'Компания', 'Место работы', 'Информация', 'Ссылка'])
         for item in items:
-            writer.writerow([item['name'], item['link'], item['salary'],
-                             item['city'], item['info']])
+            writer.writerow([item['name'], item['salary'], item['company'],
+                             item['place'], item['info'], item['link']])
 
 
 def get_html(url, params=None):
@@ -27,57 +27,45 @@ def get_html(url, params=None):
     return r
 
 
-def get_content(html):
+def get_vacancy(html):
     soup = BeautifulSoup(html, 'html.parser')
-    items = soup.find_all('div', class_='vacancy-serp-item')
-    # print(items)
+    items = soup.find_all('div', class_='Fo44F QiY08 LvoDO')
     vacancy = []
     for item in items:
-        info = item.find('div', class_='g-user-content')
+        salary = item.find('span', class_='_1OuF_ _1qw9T f-test-text-company-item-salary')
+        if salary:
+            salary = salary.get_text().replace('\xa0', ' ')
+        else:
+            salary = "Уточняйте"
+        company = item.find('span', class_='_1h3Zg _3Fsn4 f-test-text-vacancy-item-company-name e5P5i _2hCDz _2ZsgW _2SvHc')
+        if company:
+            company = company.get_text()
+        else:
+            company = "Уточняйте"
+        info = item.find('span', class_='_1h3Zg _38T7m e5P5i _2hCDz _2ZsgW _2SvHc')
         if info:
             info = info.get_text()
         else:
             info = "Уточняйте"
-        salary = item.find('div', class_='vacancy-serp-item__sidebar')
-        if salary:
-            salary = salary.get_text().replace('\xa0', '')
-        else:
-            salary = "Уточняйте"
-        # responsibility = item.find('div', data_qa_='vacancy-serp__vacancy_snippet_responsibility')
-        # responsibility = item.find('div', class_='g-user-content')
-        # # responsibility = item.find('div', attrs={'class': 'g-user-content', 'data-qa':
-        # 'vacancy-serp__vacancy_snippet_responsibility'})
-        # if responsibility:
-        #     responsibility = responsibility.get_text
-        # else:
-        #     responsibility = "Условия работы уточняйте"
-        # requirements = item.find(attrs_={'class': 'g-user-content', 'data-qa': 'vacancy-serp__vacancy_snippet_requirement'})
-        # if requirements:
-        #     requirements = requirements.get_text
-        # else:
-        #     requirements = "Требования уточняйте"
+        place = item.find('span', class_='_1h3Zg f-test-text-company-item-location e5P5i _2hCDz _2ZsgW').get_text().replace('\xa0', ' ')
+        place = place[place.find("Москва"):]
         vacancy.append({
-            'name': item.find('div', class_='vacancy-serp-item__info').get_text(),
-            'link': item.find('a', class_='bloko-link HH-LinkModifier').get('href'),
+            'name': item.find('div', class_='_1h3Zg _u7Tv _2rfUm _2hCDz _21a7u _2rPTA').get_text(),
+            'link': SITE + item.find('a', class_='icMQ_').get('href'),
             'salary': salary,
-            'city': item.find('span', class_='vacancy-serp-item__meta-info').get_text(),
+            'company': company,
+            'place': place,
             'info': info
-            # 'responsibility': responsibility,
-            # 'requirements': requirements
         })
-    # print(vacancy)
     return vacancy
 
 
 def parse():
+    URL = f'{HOST}{const.job}.html'
+    FILE = f'{const.job[1:]}.csv'
     html = get_html(URL)
-    # print(html.status_code)
     if html.status_code == 200:
-        # print(html.text)
-        vacancy = get_content(html.text)
+        vacancy = get_vacancy(html.text)
         save_file(vacancy, FILE)
     else:
         print('Error')
-
-
-parse()
