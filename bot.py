@@ -38,7 +38,6 @@ def show_jobs(message):
     Функция показа вакансий в боте
     :param message: сообщение пользователя
     """
-    global_var.number_of_messages = 3  # количество выводимых вакансий
     vacancy_list = database.get_data_dict()[global_var.number_of_vacancy:
                                             global_var.number_of_vacancy + global_var.number_of_messages]
     # vacancy_list = лист из const.number_of_messages вакансий, начиная с номера const.number_of_vacancy
@@ -57,6 +56,7 @@ def show_jobs(message):
         global_var.number_of_messages -= 1
         parse_mode_type = "Markdown"
         bot.send_message(message.from_user.id, vacancy_message, parse_mode=parse_mode_type)
+    global_var.number_of_messages = 3  # количество выводимых вакансий
     global_var.number_of_vacancy += global_var.number_of_messages
     bot.send_message(message.from_user.id, "Для просмотра других вакансий введите /more\n"
                                            "Для поиска работы в других сферах введите /search")
@@ -93,7 +93,7 @@ def job_searching(message):
         point_of_job += line
     search_message = f'Выберите профессию:\n{point_of_job}'
     bot.send_message(message.from_user.id, search_message)
-    const.number_of_vacancy = 1  # счетчик для текущей вакансии по данной профессии
+    const.number_of_vacancy = 0  # счетчик для текущей вакансии по данной профессии
 
 
 @bot.message_handler(commands=["more"])
