@@ -67,6 +67,8 @@ def chosen_job_parsing(message):
     """
     :param message: сообщение пользователя
     """
+    job_choice_message_before = "Поиск..."
+    bot.send_message(message.from_user.id, job_choice_message_before)
     user_choice = 'text'
     global_var.job = message.json[user_choice]  # получаем команду, выбранную пользователем
     first_element_of_file = 1  # с какого символа в слове job начинается название файла для базы данных
