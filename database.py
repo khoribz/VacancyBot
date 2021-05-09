@@ -1,4 +1,5 @@
 import csv
+import os
 
 import const
 import global_var
@@ -38,3 +39,14 @@ def get_data_dict():
         for row in reader:
             vacancy_block.append(row)
     return vacancy_block
+
+
+def file_delete():
+    """
+    удаление файла данных по прошлому запросу
+    """
+    first_element_of_file = 1  # с какого символа в слове job начинается название файла для базы данных
+    file_job_name = global_var.job[first_element_of_file:]  # название файла для определенной профессии
+    file_job = f'{file_job_name}.csv'
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), file_job)
+    os.remove(path)
