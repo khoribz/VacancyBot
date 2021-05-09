@@ -1,5 +1,3 @@
-import pytest
-
 import const
 import database
 import global_var
