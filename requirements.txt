@@ -7,5 +7,4 @@ Markdown==3.3.4
 pyTelegramBotAPI==3.6.7
 requests==2.25.1
 soupsieve==2.2.1
-telebot==0.0.4
 urllib3==1.26.4
