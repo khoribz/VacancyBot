@@ -67,6 +67,7 @@ def chosen_job_parsing(message):
     """
     :param message: сообщение пользователя
     """
+    const.number_of_vacancy = 0  # счетчик для текущей вакансии по данной профессии
     job_choice_message_before = "Поиск..."
     bot.send_message(message.from_user.id, job_choice_message_before)
     user_choice = 'text'
@@ -95,7 +96,6 @@ def job_searching(message):
         point_of_job += line
     search_message = f'Выберите профессию:\n{point_of_job}'
     bot.send_message(message.from_user.id, search_message)
-    const.number_of_vacancy = 0  # счетчик для текущей вакансии по данной профессии
 
 
 @bot.message_handler(commands=["more"])
@@ -104,7 +104,12 @@ def show_more(message):
     Функция для показа других вакансий по данной профессии
     :param message: сообщение пользователя
     """
-    show_jobs(message)
+    if global_var.number_of_vacancy >= len(database.get_data_dict()):
+        vacancy_end_message = "Самые свежие объявления закончились, сделайте запрос чуть-чуть попозже)\n" \
+                              "Для поиска вакансий по другим профессиям введите /search"
+        bot.send_message(message.from_user.id, vacancy_end_message)
+    else:
+        show_jobs(message)
 
 
 bot.polling(none_stop=True)
