@@ -67,7 +67,7 @@ def chosen_job_parsing(message):
     """
     :param message: сообщение пользователя
     """
-    const.number_of_vacancy = 0  # счетчик для текущей вакансии по данной профессии
+    global_var.number_of_vacancy = 0  # счетчик для текущей вакансии по данной профессии
     job_choice_message_before = "Поиск..."
     bot.send_message(message.from_user.id, job_choice_message_before)
     user_choice = 'text'
