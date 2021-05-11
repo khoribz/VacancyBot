@@ -13,8 +13,10 @@ def test_city():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         place = vacancy[const.name_place_work]
-        num_of_city = place.find("Москва")
-        assert num_of_city == 0
+        city = 'Москва'
+        num_of_city = place.find(city)
+        test_result = 0
+        assert num_of_city == test_result
 
 
 def test_link():
@@ -26,10 +28,12 @@ def test_link():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         link = vacancy[const.name_link]
-        num_of_format = link.find('.html')
-        if num_of_format:
+        link_format = '.html'
+        num_of_format = link.find(link_format)
+        if num_of_format:  # если ссылка нашлась
             num_of_format = True
-        assert num_of_format is True
+        test_result = True
+        assert num_of_format == test_result
 
 
 def test_name():
@@ -41,9 +45,11 @@ def test_name():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         name = vacancy[const.name_vacancy]
-        if name != '':
+        empty_name = ''
+        if name != empty_name:
             name = True
-        assert name is True
+        test_result = True
+        assert name == test_result
 
 
 def test_salary():
@@ -55,9 +61,11 @@ def test_salary():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         salary = vacancy[const.name_salary]
-        if salary != '':
+        empty_salary = ''
+        if salary != empty_salary:
             salary = True
-        assert salary is True
+        test_result = True
+        assert salary == test_result
 
 
 def test_company():
@@ -69,9 +77,11 @@ def test_company():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         company = vacancy[const.name_company]
-        if company != '':
+        empty_company = ''
+        if company != empty_company:
             company = True
-        assert company is True
+        test_result = True
+        assert company == test_result
 
 
 def test_info():
@@ -83,6 +93,8 @@ def test_info():
     vacancy_list = database.get_data_dict()
     for vacancy in vacancy_list:
         info = vacancy[const.name_info]
-        if info != '':
+        empty_info = ''
+        if info != empty_info:
             info = True
-        assert info is True
+        test_result = True
+        assert info == test_result

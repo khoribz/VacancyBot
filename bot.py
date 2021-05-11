@@ -53,13 +53,16 @@ def show_jobs(message):
         vacancy_message += const.bold_name_place_work + vacancy[const.name_place_work] + enter
         vacancy_message += const.bold_name_info + vacancy[const.name_info] + enter
         vacancy_message += const.bold_name_link + vacancy[const.name_link]
-        global_var.number_of_messages -= 1
+        formed_vacancy = 1  # сформировали одну вакансию
+        global_var.number_of_messages -= formed_vacancy  # отнимаем количество сформированных вакансий
         parse_mode_type = "Markdown"
         bot.send_message(message.from_user.id, vacancy_message, parse_mode=parse_mode_type)
     global_var.number_of_messages = 3  # количество выводимых вакансий
-    global_var.number_of_vacancy += global_var.number_of_messages
-    bot.send_message(message.from_user.id, "Для просмотра других вакансий введите /more\n"
-                                           "Для поиска работы в других сферах введите /search")
+    global_var.number_of_vacancy += global_var.number_of_messages  # увеличиваем номер первой выводимой вакансии
+    # по данной профессии
+    show_jobs_message = "Для просмотра других вакансий введите /more\n"\
+                        "Для поиска работы в других сферах введите /search"
+    bot.send_message(message.from_user.id,  show_jobs_message)
 
 
 @bot.message_handler(commands=list(jobs_name.dict_jobs.values()))
