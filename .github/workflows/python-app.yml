@@ -7,7 +7,6 @@ on:
   push:
     branches: 
     - master
-    - dev
   pull_request:
     branches: [ master ]
 
@@ -15,8 +14,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      TOKEN: 1628079242:AAFRgOko-BVHmI9ai299WJz8R-0tPBmhebs
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
