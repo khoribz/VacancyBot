@@ -15,6 +15,5 @@ bold_name_link = f'*{name_link}:* '
 name_info = 'Информация'
 bold_name_info = f'*{name_info}:* '
 unknown = "Уточняйте"
-TOKEN = '1628079242:AAFRgOko-BVHmI9ai299WJz8R-0tPBmhebs'
 change_symbol_from = '\xa0'  # заменяем ненужный символ
 change_symbol_to = ' '
