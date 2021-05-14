@@ -1,15 +1,14 @@
-import os
 import os.path
 import telebot
 
+import bot_token
 import const
 import database
 import global_var
 import jobs_name
 import parse
 
-token = os.getenv("TOKEN")
-bot = telebot.TeleBot(token)
+bot = telebot.TeleBot(bot_token.TOKEN)
 
 
 @bot.message_handler(commands=['start'])
