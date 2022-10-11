@@ -21,7 +21,7 @@ _global_var.py_ - a file containing global variables
 _jobs_name.py_ - a file containing a dictionary of the profession and its part of the address on the site 
 _tests.py_ - a file containing tests of the site parsing results  
 _requirements.txt_ - project launch requirements  
-__Profile_ - the file needed to connect the bot to the Heroku server
+_Procfile_ - the file needed to connect the bot to the Heroku server
 
 # Bot commands:
 _/start_ - start the bot   
