@@ -1,38 +1,37 @@
-# Telegram бот по поиску вакансий в Москве
+# Telegram bot for job search in Moscow
 
-Данный бот предлагает на выбор профессию, по которой осуществляется поиск вакансий
-на сайте *https://www.superjob.ru*
+This bot offers a choice of profession, which is used to search for vacancies
+on the site *https://www.superjob.ru*
 
-Чтобы запустить бот, необходимо в консоли прописать следующие команды:
+To launch the bot, you need to register the following commands in the console:
 ``` bash
 git clone https://github.com/khoribz/review2.git -b dev
 cd review2
 pip3 install -r requirements.txt
 python3 bot.py;
 ```
-Теперь можно найти в Telegram бота @GetVacancyBot и искать себе работу)
+Now you can find a Telegram bot @GetVacancyBot and look for a job)
 
 
-# Файлы проекта:
-_bot.py_ - файл, в котором находятся основные функции, использующиеся при взаимодействии с ботом   
-_parse.py_ - файл, в котором происходит поиск информации о вакансиях в зависимости от выбранной профессии   
-_database.py_ - файл, в котором находятся функции, работающие с базами данных   
-_const.py_ - файл, в котором содержатся константы   
-_global_var.py_ - файл, в котором содержатся глобальные переменные   
-_jobs_name.py_ - файл, в котором находится словарь из профессии и ее части адреса на сайте 
-_tests.py_ - файл, в котором находятся тесты результатов парсинга сайта  
-_requirements.txt_ - требования к запуску проекта  
-_Procfile_ - файл, нужный для подключения бота к серверу Heroku  
+_bot.py_ - a file containing the main functions used when interacting with the bot   
+_parse.py_ - a file in which information about vacancies is searched depending on the chosen profession   
+_database.py_ - a file containing functions that work with databases   
+_const.py_ - a file containing constants   
+_global_var.py_ - a file containing global variables   
+_jobs_name.py_ - a file containing a dictionary of the profession and its part of the address on the site 
+_tests.py_ - a file containing tests of the site parsing results  
+_requirements.txt_ - project launch requirements  
+__Profile_ - the file needed to connect the bot to the Heroku server
 
-# Команды бота:
-_/start_ - запуск бота   
-_/help_ - дальнейшие инструкции после старта  
-_/search_ - команда для показа профессий, по которым можно найти вакансии  
-_/more_ - показать еще вакансии по выбранной профессии  
+# Bot commands:
+_/start_ - start the bot   
+_/help_ - further instructions after the start  
+_/search_ - a command to show professions for which vacancies can be found
+_/more_ - show more vacancies for the chosen profession 
 
-# Тестирование:
-Для тестирования результатов парсинга сайта необходимо, находясь в директории с проектом,
-в консоли прописать следующую команду:
+# Testing:
+To test the results of site parsing, it is necessary, while in the directory with the project,
+to register the following command in the console:
 ``` bash
 pytest tests.py
 ```
